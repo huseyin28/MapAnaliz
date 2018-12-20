@@ -7,7 +7,7 @@ body{
     height: 100%;
     background-color: grey;
 }
-#DashboardPanel{
+*[data-type="panel"]{
     z-index: 1;
     position: fixed;
     top: 12px;
