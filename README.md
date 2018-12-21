@@ -1,2 +1,2 @@
 # MapAnaliz
-Kişisel proje
+Kişisel projem
