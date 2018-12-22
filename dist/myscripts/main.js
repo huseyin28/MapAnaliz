@@ -1,20 +1,22 @@
-import {
-    Level1
-} from './Level1.js'
-import {
-    UI
-} from './UI.js'
+import {K1,K2,K3} from './katmans.js'
+import {UI} from './UI.js'
 let map;
 $(document).ready(ready);
 
 function ready() {
     MapObject.init()
+    let k1 = new K1();
+    let k2 = new K2();
+    let k3 = new K3();
 }
 
 let MapObject = {
     TileLayers: {},
     init: function () {
-        map = L.map('map');
+        map = L.map('map', {
+            fadeAnimation: true,
+            zoomAnimation: true
+        });
         map.fitBounds([
             [34.7506398050501, 24.620361328125004],
             [43.02071359427862, 45.71411132812501]
@@ -32,7 +34,7 @@ let MapObject = {
 
         this.addEditableControl();
         this.addDashboardControl();
-       this.addFitMy();
+        this.addFitMy();
     },
     addDashboardControl: function () {
         var customControl = L.Control.extend({
@@ -100,32 +102,27 @@ let MapObject = {
             onAdd: function (map) {
                 let container = L.DomUtil.create('div', 'leaflet-control-layers leaflet-control leaflet-control-custom');
                 let a = document.createElement('a');
-                // a.className = 'leaflet-control-layers-toggle';
                 a.style.backgroundImage = 'none';
                 a.style.padding = '4px;'
-                a.innerHTML = `<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                width="22px" height="22px" viewBox="0 0 561 561" style="margin:4px;" xml:space="preserve">
-           <g>
-               <g id="gps-fixed">
-                   <path d="M280.5,178.5c-56.1,0-102,45.9-102,102c0,56.1,45.9,102,102,102c56.1,0,102-45.9,102-102
-                       C382.5,224.4,336.6,178.5,280.5,178.5z M507.45,255C494.7,147.9,410.55,63.75,306,53.55V0h-51v53.55
-                       C147.9,63.75,63.75,147.9,53.55,255H0v51h53.55C66.3,413.1,150.45,497.25,255,507.45V561h51v-53.55
-                       C413.1,494.7,497.25,410.55,507.45,306H561v-51H507.45z M280.5,459C181.05,459,102,379.95,102,280.5S181.05,102,280.5,102
-                       S459,181.05,459,280.5S379.95,459,280.5,459z" fill="#000"/>
-               </g>
-           </g>
-           </svg>`;
+                a.innerHTML = `<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18px" height="18px" viewBox="0 0 561 561" style="margin:6px;" xml:space="preserve"><g><g id="gps-fixed"><path d="M280.5,178.5c-56.1,0-102,45.9-102,102c0,56.1,45.9,102,102,102c56.1,0,102-45.9,102-102 C382.5,224.4,336.6,178.5,280.5,178.5z M507.45,255C494.7,147.9,410.55,63.75,306,53.55V0h-51v53.55 C147.9,63.75,63.75,147.9,53.55,255H0v51h53.55C66.3,413.1,150.45,497.25,255,507.45V561h51v-53.55C413.1,494.7,497.25,410.55,507.45,306H561v-51H507.45z M280.5,459C181.05,459,102,379.95,102,280.5S181.05,102,280.5,102 S459,181.05,459,280.5S379.95,459,280.5,459z" fill="#000"/></g></g></svg>`;
                 a.style.backgroundPosition = 'center center';
-                a.style.paddingTop = '7px';
                 a.style.cursor = 'pointer';
                 a.style.textAlign = 'center';
-                a.title = 'Editable';
+                a.title = 'Fit My Location';
                 container.appendChild(a);
 
                 a.onclick = function () {
                     if (navigator.geolocation) {
                         navigator.geolocation.getCurrentPosition(function (position) {
-                            map.setView([position.coords.latitude, position.coords.longitude], 16);
+                            map.setView([position.coords.latitude, position.coords.longitude], map.getZoom(), {
+                                pan: {
+                                    animate: true,
+                                    duration: 2.5
+                                },
+                                zoom: {
+                                    animate: true
+                                }
+                            });
                         });
                     }
                 }
