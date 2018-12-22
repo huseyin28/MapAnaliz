@@ -86,3 +86,4 @@ let MapObject = {
         map.addControl(new customControl())
     }
 }
+ 
