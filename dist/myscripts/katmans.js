@@ -1,6 +1,12 @@
 export class K1 {
     constructor(){
-        console.log("K1");
+        this.rows = [];
+        this.load();
+    }
+    load(){
+        $.ajax({
+             
+        });
     }
 }
 
